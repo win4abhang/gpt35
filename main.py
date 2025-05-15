@@ -23,7 +23,7 @@ def get_intent(data: QueryInput):
                 {
                     "role": "system",
                     "content": (
-                        "returns only the most relevant store or service category Name in 4 words or less."
+                        "returns only the most relevant store or service category Name in 4 words or less. in English"
                     )
                 },
                 {
