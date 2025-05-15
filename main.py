@@ -23,8 +23,7 @@ def get_intent(data: QueryInput):
                 {
                     "role": "system",
                     "content": (
-                        "You are a classifier that returns only the most relevant store or service type. "
-                        "Only output the category in 4 words or less. No explanation."
+                        "returns only the most relevant store or service category Name in 4 words or less."
                     )
                 },
                 {
