@@ -16,7 +16,7 @@ class QueryInput(BaseModel):
 @app.post("/intent")
 def get_intent(data: QueryInput):
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a classifier that returns the most relevant service category."},
@@ -25,9 +25,8 @@ def get_intent(data: QueryInput):
             max_tokens=30,
             temperature=0.2,
         )
-        tag = response["choices"][0]["message"]["content"].strip()
+        tag = response.choices[0].message.content.strip()
         return {"input": data.prompt, "predicted_tag": tag}
 
     except openai.error.OpenAIError as e:
-        # Return a 500 error with message from OpenAI exception
         raise HTTPException(status_code=500, detail=f"OpenAI API error: {str(e)}")
