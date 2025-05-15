@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import openai
+from openai import OpenAIError
 import os
 from dotenv import load_dotenv
-from openai import OpenAIError
 
-load_dotenv()  # Load environment variables
+load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -29,5 +29,5 @@ def get_intent(data: QueryInput):
         tag = response.choices[0].message.content.strip()
         return {"input": data.prompt, "predicted_tag": tag}
 
-        except OpenAIError as e:
+    except OpenAIError as e:
         raise HTTPException(status_code=500, detail=f"OpenAI API error: {str(e)}")
