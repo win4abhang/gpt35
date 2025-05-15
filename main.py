@@ -20,10 +20,19 @@ def get_intent(data: QueryInput):
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a classifier that returns the most relevant service category."},
-                {"role": "user", "content": f"Classify this query: {data.prompt}"}
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a classifier that returns only the most relevant store or service type. "
+                        "Only output the category in 4 words or less. No explanation."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": f"{data.prompt}"
+                }
             ],
-            max_tokens=30,
+            max_tokens=10,  # Limit output length
             temperature=0.2,
         )
         tag = response.choices[0].message.content.strip()
