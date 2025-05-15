@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import openai
 import os
 from dotenv import load_dotenv
+from openai import OpenAIError
 
 load_dotenv()  # Load environment variables
 
@@ -28,5 +29,5 @@ def get_intent(data: QueryInput):
         tag = response.choices[0].message.content.strip()
         return {"input": data.prompt, "predicted_tag": tag}
 
-    except openai.error.OpenAIError as e:
+        except OpenAIError as e:
         raise HTTPException(status_code=500, detail=f"OpenAI API error: {str(e)}")
